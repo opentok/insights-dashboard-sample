@@ -1,0 +1,9 @@
+.card {
+  display: inline-block;
+  width: calc(50% - 20px);
+  margin: 0 10px 20px 10px;
+}
+
+.card-body {
+  height: 300px;
+}
