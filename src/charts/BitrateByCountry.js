@@ -21,7 +21,7 @@ const query = gql`
           country,
           quality {
             subscriber {
-              videoBitrateAvg
+              videoBitrateKbpsAvg
             }
           }
         }
@@ -44,7 +44,7 @@ class FailuresByBrowser extends Component {
               datasets: [{
                 label: 'Avg. Bitrate',
                 backgroundColor: '#36A2EB',
-                data: resources.map(item => get(item, 'quality.subscriber.videoBitrateAvg', 0)),
+                data: resources.map(item => get(item, 'quality.subscriber.videoBitrateKbpsAvg', 0)),
               }],
             }} />
           );
