@@ -14,19 +14,19 @@ const query = gql`
     project(projectId: ${apiKey}) {
       projectData(
         start: ${moment().subtract(10, 'days')},
-        groupBy: BROWSER_NAME,
-        browserName: [CHROME, FIREFOX, IE]
+        groupBy: BROWSER,
+        browser: [CHROME, FIREFOX, IE]
       ) { 
         resources {
-          browserName,
+          browser,
           errors {
-            guidConnect {
+            connect {
               failures
             },
-            guidPublish {
+            publish {
               failures
             },
-            guidSubscribe {
+            subscribe {
               failures
             }
           }
@@ -46,22 +46,22 @@ class FailuresByBrowser extends Component {
           const resources = get(data, 'project.projectData.resources', []);
           return (
             <Bar data={{
-              labels: resources.map(item => item.browserName),
+              labels: resources.map(item => item.browser),
               datasets: [
                 {
                   label: 'Connect Failures',
                   backgroundColor: '#FF6384',
-                  data: resources.map(item => get(item, 'errors.guidConnect.failures', 0)),
+                  data: resources.map(item => get(item, 'errors.connect.failures', 0)),
                 },
                 {
                   label: 'Publish Failures',
                   backgroundColor: '#E89033',
-                  data: resources.map(item => get(item, 'errors.guidPublish.failures', 0)),
+                  data: resources.map(item => get(item, 'errors.publish.failures', 0)),
                 },
                 {
                   label: 'Subscribe Failures',
                   backgroundColor: '#FFCE56',
-                  data: resources.map(item => get(item, 'errors.guidSubscribe.failures', 0)),
+                  data: resources.map(item => get(item, 'errors.subscribe.failures', 0)),
                 },
               ],
             }} />
