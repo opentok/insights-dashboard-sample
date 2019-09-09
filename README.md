@@ -144,7 +144,7 @@ Notice that all the environment variables used by the client start with `REACT_A
 
 #### Query to Insights API (Sample)
 
-##### This query will return all your session IDs since the last 10 days.
+##### This query will return all your session IDs from the last 10 days.
 ```
   {
     project(projectId: ${YOUR_API_KEY}) {
