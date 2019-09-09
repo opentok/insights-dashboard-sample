@@ -137,3 +137,61 @@ Notice that all the environment variables used by the client start with `REACT_A
   }
 }
 ```
+
+### Publisher and Subscriber minutes by Session
+
+<img alt="Publisher and Subscriber minutes by Session" src="screenshots/session_minutes.png" width="580" />
+
+#### Query to Insights API (Sample)
+
+##### This query will return all your session IDs since the last 10 days.
+```
+  {
+    project(projectId: ${YOUR_API_KEY}) {
+      sessionData {
+        sessionSummaries(start: ${moment().subtract(10, 'days')}) {
+          totalCount
+          resources {
+            sessionId
+          }
+        }
+      }
+    }
+  }
+```
+##### On each session Id, you can get the total publisherMinutes and subscriberMinutes.
+```
+{
+  project(projectId: ${YOUR_API_KEY}) {
+    sessionData {
+      session(sessionId: "${YOUR_SESSION_ID}") {
+        sessionId
+        publisherMinutes
+        subscriberMinutes
+        meetings {
+          totalCount
+        }
+      }
+    }
+  }
+}
+```
+
+##### Additionally, you can get the publisherMinutes and subscriberMinutes of each one of the meetings in the session.
+```
+{
+  project(projectId: ${YOUR_API_KEY}) {
+    sessionData {
+      session(sessionId: "${YOUR_SESSION_ID}") {
+        meetings {
+          resources {
+            meetingId
+            publisherMinutes
+            subscriberMinutes
+          }
+        }
+      }
+    }
+  }
+}
+```
