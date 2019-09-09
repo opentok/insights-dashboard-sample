@@ -140,7 +140,7 @@ Notice that all the environment variables used by the client start with `REACT_A
 
 ### Publisher and Subscriber minutes by Session
 
-<img alt="Publisher and Subscriber minutes by Session" src="screenshots/session_minutes.png" width="580" />
+<img alt="Publisher and Subscriber minutes by Session" src="screenshots/session_minutes.png" />
 
 #### Query to Insights API (Sample)
 
