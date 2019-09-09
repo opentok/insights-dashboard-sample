@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import ChartContainer from './components/ChartContainer';
+import TableContainer from './components/TableContainer';
 import UsageByDay from './charts/UsageByDay';
+import UsageBySession from './charts/UsageBySession';
 import SdkDistribution from './charts/SdkDistribution';
 import FailuresByBrowser from './charts/FailuresByBrowser';
 import BitrateByCountry from './charts/BitrateByCountry';
@@ -22,6 +24,9 @@ class App extends Component {
         <ChartContainer titleIcon="bar" title="Bitrate by Country">
           <BitrateByCountry />
         </ChartContainer>
+        <TableContainer titleIcon="table" title="Publisher and Subscriber minutes by Session">
+          <UsageBySession />
+        </TableContainer>
       </div>
     );
   }
