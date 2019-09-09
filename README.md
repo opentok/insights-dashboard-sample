@@ -159,7 +159,7 @@ Notice that all the environment variables used by the client start with `REACT_A
     }
   }
 ```
-##### On each session Id, you can get the total publisherMinutes and subscriberMinutes.
+##### You can then get the total publisher and subscriber minutes for a single session as follows:
 ```
 {
   project(projectId: ${YOUR_API_KEY}) {
