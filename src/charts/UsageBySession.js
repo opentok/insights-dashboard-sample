@@ -16,19 +16,19 @@ const apiKey = process.env.REACT_APP_API_KEY;
 
 /* Get all session IDs from the last 10 days */
 const sessionSummariesQuery = gql`
-    {
-      project(projectId: ${apiKey}) {
-        sessionData {
-          sessionSummaries(start: ${moment().subtract(10, 'days')}) {
-            totalCount
-            resources {
-              sessionId
-            }
+  {
+    project(projectId: ${apiKey}) {
+      sessionData {
+        sessionSummaries(start: ${moment().subtract(10, 'days')}) {
+          totalCount
+          resources {
+            sessionId
           }
         }
       }
     }
-  `;
+  }
+`;
 
 /* Get the publisherMinutes and subscriberMinutes of a particular session Id */
 const sessionQuery = sessionId => gql`
