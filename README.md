@@ -152,18 +152,18 @@ This ensures that only those are accessible by the client, protecting your API s
 
 ##### This query will return all your session IDs from the last 10 days.
 ```
-  {
-    project(projectId: ${YOUR_API_KEY}) {
-      sessionData {
-        sessionSummaries(start: ${moment().subtract(10, 'days')}) {
-          totalCount
-          resources {
-            sessionId
-          }
+{
+  project(projectId: ${YOUR_API_KEY}) {
+    sessionData {
+      sessionSummaries(start: ${moment().subtract(10, 'days')}) {
+        totalCount
+        resources {
+          sessionId
         }
       }
     }
   }
+}
 ```
 ##### You can then get the total publisher and subscriber minutes for a single session as follows:
 ```
