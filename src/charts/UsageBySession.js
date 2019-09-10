@@ -10,6 +10,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Loading from '../components/Loading';
+import NoResultsFound from '../components/NoResultsFound';
 import round from './helpers/round';
 
 const apiKey = process.env.REACT_APP_API_KEY;
@@ -52,7 +53,8 @@ class UsageBySession extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      sessionInfo: null
+      sessionInfo: null, 
+      loading: true,
     }
   }
   getSessions = async () => {
@@ -68,11 +70,15 @@ class UsageBySession extends Component {
   async componentDidMount() {
     const sessions = await this.getSessions();
     const sessionInfo = await Promise.all(sessions.map(this.getSessionInfoById));
-    this.setState({ sessionInfo });
+    this.setState({
+      sessionInfo,
+      loading: false,
+    });
   }
   render() {
-    const { sessionInfo } = this.state;
-    if (!sessionInfo) return <Loading />;
+    const { sessionInfo, loading } = this.state;
+    if (loading) return <Loading />;
+    if (sessionInfo.length === 0) return <NoResultsFound />;
     return (
       <Paper>
         <Table>
