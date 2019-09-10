@@ -30,7 +30,7 @@ const query = gql`
   }
 `;
 
-class FailuresByBrowser extends Component {
+class BitrateByCountry extends Component {
   render() {
     return (
       <Query query={query}>
@@ -54,4 +54,4 @@ class FailuresByBrowser extends Component {
   }
 }
 
-export default FailuresByBrowser;
+export default BitrateByCountry;

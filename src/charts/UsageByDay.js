@@ -29,7 +29,7 @@ const query = gql`
   }
 `;
 
-class SdkDistribution extends Component {
+class UsageByDay extends Component {
   render() {
     return (
       <Query query={query}>
@@ -60,4 +60,4 @@ class SdkDistribution extends Component {
   }
 }
 
-export default SdkDistribution;
+export default UsageByDay;

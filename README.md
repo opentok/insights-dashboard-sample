@@ -13,21 +13,27 @@ Dashboard Sample which makes use of OpenTok Insights GraphQL API
 
 3. Copy `.env.template` to `.env` and edit the environment variables.
 
-4. Run the server and the client app: `npm start`. This will run both the server (server.js) and the client app (react-scripts).
+4. Run the server and the client app: `npm start`. This will run both
+   the server (server.js) and the client app (react-scripts).
+
+Open http://localhost:3000 in your browser.
 
 ## Configuration options
 
-Configuration can be done using environment variables. You can create an `.env` file for easier config.
+Configuration can be done using environment variables. You can create
+an `.env` file for easier config.
 
 Environment Variable Names and Description:
-- `REACT_APP_INSIGHTS_URL` (Required): The URL for the OpenTok Insights API.
+
+- `REACT_APP_INSIGHTS_URL` (Required): The URL for the OpenTok Insights API server.
 - `REACT_APP_API_KEY` (Required): Your OpenTok API Key.
 - `API_SECRET` (Required): Your OpenTok API Secret.
 - `SERVER_PORT` (Required): The port number for your server to run on.
 - `REACT_APP_SERVER_URL` (Required): The URL for your server app.
 - `APP_CLIENT_URL` (Required): The URL for your client app.
 
-Notice that all the environment variables used by the client start with `REACT_APP_`. This ensures that only those are accessible by the client, protecting your API secret.
+Notice that all the environment variables used by the client start with `REACT_APP_`.
+This ensures that only those are accessible by the client, protecting your API secret.
 
 ## Charts - Query samples
 
@@ -130,6 +136,64 @@ Notice that all the environment variables used by the client start with `REACT_A
         quality {
           subscriber {
             videoBitrateAvg
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+### Publisher and Subscriber minutes by Session
+
+<img alt="Publisher and Subscriber minutes by Session" src="screenshots/session_minutes.png" />
+
+#### Query to Insights API (Sample)
+
+##### This query will return all your session IDs from the last 10 days.
+```
+{
+  project(projectId: ${YOUR_API_KEY}) {
+    sessionData {
+      sessionSummaries(start: ${moment().subtract(10, 'days')}) {
+        totalCount
+        resources {
+          sessionId
+        }
+      }
+    }
+  }
+}
+```
+##### You can then get the total publisher and subscriber minutes for a single session as follows:
+```
+{
+  project(projectId: ${YOUR_API_KEY}) {
+    sessionData {
+      session(sessionId: "${YOUR_SESSION_ID}") {
+        sessionId
+        publisherMinutes
+        subscriberMinutes
+        meetings {
+          totalCount
+        }
+      }
+    }
+  }
+}
+```
+
+##### Additionally, you can get the publisherMinutes and subscriberMinutes of each one of the meetings in the session.
+```
+{
+  project(projectId: ${YOUR_API_KEY}) {
+    sessionData {
+      session(sessionId: "${YOUR_SESSION_ID}") {
+        meetings {
+          resources {
+            meetingId
+            publisherMinutes
+            subscriberMinutes
           }
         }
       }
