@@ -14,7 +14,7 @@ import round from './helpers/round';
 
 const apiKey = process.env.REACT_APP_API_KEY;
 
-/* Get all session IDs from the last month */
+/* Get all session IDs from the last 10 days */
 const sessionSummariesQuery = gql`
     {
       project(projectId: ${apiKey}) {
