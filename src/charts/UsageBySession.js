@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import gql from 'graphql-tag';
 import { withApollo } from 'react-apollo';
-import { get } from 'lodash';
+import { get, map } from 'lodash';
 import moment from 'moment';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -31,17 +31,19 @@ const sessionSummariesQuery = gql`
   }
 `;
 
-/* Get the publisherMinutes and subscriberMinutes of a particular session Id */
-const sessionQuery = sessionId => gql`
+/* Get the publisherMinutes and subscriberMinutes for every session Id within sessionIds */
+const sessionQuery = sessionIds => gql`
   {
     project(projectId: ${apiKey}) {
       sessionData {
-        session(sessionId: "${sessionId}") {
-          sessionId
-          publisherMinutes
-          subscriberMinutes
-          meetings {
-            totalCount
+        sessions(sessionIds: [${sessionIds}]) {
+          resources {
+            sessionId
+            publisherMinutes
+            subscriberMinutes
+            meetings {
+              totalCount
+            }
           }
         }
       }
@@ -53,7 +55,7 @@ class UsageBySession extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      sessionInfo: [], 
+      sessionsInfo: [],
       loading: true,
     }
   }
@@ -62,23 +64,23 @@ class UsageBySession extends Component {
     const results = await this.props.client.query(query);
     return get(results.data, 'project.sessionData.sessionSummaries.resources', []);
   }
-  getSessionInfoById = async ({ sessionId }) => {
-    const query = { query: sessionQuery(sessionId) };
+  getSessionsInfo = async (sessionIds) => {
+    const query = { query: sessionQuery(sessionIds) };
     const results = await this.props.client.query(query);
-    return get(results.data, 'project.sessionData.session', []);
+    return get(results.data, 'project.sessionData.sessions.resources', []);
   }
   async componentDidMount() {
-    const sessions = await this.getSessions();
-    const sessionInfo = await Promise.all(sessions.map(this.getSessionInfoById));
+    const sessionIds = map(await this.getSessions(), (session) => `"${session.sessionId}"`);
+    const sessionsInfo = await this.getSessionsInfo(sessionIds);
     this.setState({
-      sessionInfo,
+      sessionsInfo,
       loading: false,
     });
   }
   render() {
-    const { sessionInfo, loading } = this.state;
+    const { sessionsInfo, loading } = this.state;
     if (loading) return <Loading />;
-    if (sessionInfo.length === 0) return <NoResultsFound />;
+    if (sessionsInfo.length === 0) return <NoResultsFound />;
     return (
       <Paper>
         <Table>
@@ -91,7 +93,7 @@ class UsageBySession extends Component {
             </TableRow>
           </TableHead>
           <TableBody>
-            { sessionInfo.map(({sessionId, meetings, publisherMinutes, subscriberMinutes}) => (
+            { sessionsInfo.map(({sessionId, meetings, publisherMinutes, subscriberMinutes}) => (
               <TableRow key={sessionId}>
                 <TableCell component="th" scope="row">{sessionId}</TableCell>
                 <TableCell align="right" scope="row">{meetings.totalCount}</TableCell>
