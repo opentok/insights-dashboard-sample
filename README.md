@@ -170,12 +170,14 @@ This ensures that only those are accessible by the client, protecting your API s
 {
   project(projectId: ${YOUR_API_KEY}) {
     sessionData {
-      session(sessionId: "${YOUR_SESSION_ID}") {
-        sessionId
-        publisherMinutes
-        subscriberMinutes
-        meetings {
-          totalCount
+      sessions(sessionIds: ["${YOUR_SESSION_ID}"]) {
+        resource {
+          sessionId
+          publisherMinutes
+          subscriberMinutes
+          meetings {
+            totalCount
+          }
         }
       }
     }
@@ -188,12 +190,14 @@ This ensures that only those are accessible by the client, protecting your API s
 {
   project(projectId: ${YOUR_API_KEY}) {
     sessionData {
-      session(sessionId: "${YOUR_SESSION_ID}") {
-        meetings {
-          resources {
-            meetingId
-            publisherMinutes
-            subscriberMinutes
+      sessions(sessionIds: ["${YOUR_SESSION_ID}"]) {
+        resources {
+          meetings {
+            resources {
+              meetingId
+              publisherMinutes
+              subscriberMinutes
+            }
           }
         }
       }
