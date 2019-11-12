@@ -9,11 +9,13 @@ Dashboard Sample which makes use of OpenTok Insights GraphQL API
 
 1. Clone the repository.
 
-2. Install dependencies: `npm install`.
+2. If you are using nvm, run `nvm use` to use the version of Node from the .nvmrc file.
 
-3. Copy `.env.template` to `.env` and edit the environment variables.
+3. Install dependencies: `npm install`.
 
-4. Run the server and the client app: `npm start`. This will run both
+4. Copy `.env.template` to `.env` and edit the environment variables.
+
+5. Run the server and the client app: `npm start`. This will run both
    the server (server.js) and the client app (react-scripts).
 
 Open http://localhost:3000 in your browser.
