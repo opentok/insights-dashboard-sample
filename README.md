@@ -150,13 +150,13 @@ This ensures that only those are accessible by the client, protecting your API s
 
 #### Query to Insights API (Sample)
 
-##### This query will return one page (up to 50 results) if your session IDs from the last 10 days:
+##### This query will return pages (50 results each) of your session IDs from the last 10 days:
 ```
 {
   project(projectId: ${YOUR_API_KEY}) {
     sessionData {
       sessionSummaries(
-        start: ${START_TIMESTAMP}
+        start: ${moment().subtract(10, 'days')}
         endCursor: "${END_CURSOR}"
       ) {
         totalCount
