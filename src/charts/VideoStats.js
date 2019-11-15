@@ -62,7 +62,7 @@ const query = gql`
   {
     project(projectId: ${apiKey}) {
       projectData(
-        start: ${moment().subtract(10, 'days')},
+        start: ${moment().subtract(120, 'days')},
         interval: DAILY
       ) { 
         resources {
@@ -82,38 +82,8 @@ class VideoStats extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      sessionsInfo: [],
+      streamChartData: [],
       loading: true,
-      mockData: {
-        "datasets": [
-          {
-            "label": "Publisher 1",
-            "borderColor": "rgba(75,192,192,0.4)",
-            "fill": false,
-            "data": [
-              496.8000000000011,
-              692.150000000001,
-              519.9833333333345,
-              457.4833333333336,
-              473.4500000000001,
-              884
-            ]
-          },
-          {
-            "label": "Publisher 2",
-            "borderColor": "rgba(75,75,192,0.4)",
-            "fill": false,
-            "data": [
-              1264.083333333334,
-              1421.5000000000011,
-              1320.8833333333346,
-              1226.9333333333348,
-              1277.4333333333352,
-              1785.9166666666688
-            ]
-          }
-        ]
-      },
     }
   }
   getSessions = async () => {
@@ -126,41 +96,75 @@ class VideoStats extends Component {
     const results = await this.props.client.query(query);
     return get(results.data, 'project.sessionData.sessions.resources', []);
   }
+  convertStreamArrayToChartData = (streamArray) => {
+    const colors = ['#66C5CC', '#F6CF71', '#F89C74', '#DCB0F2', '#87C55F',
+      '#9EB9F3', '#FE88B1', '#C9DB74', '#8BE0A4', '#B497E7', '#D3B484', '#B3B3B3'];
+    let colorIndex = 0;
+    return streamArray.reduce((acc, streamData) => {
+      const streamStatsArray = get(streamData, 'streamStatsCollection.resources', []);
+      if (streamStatsArray.length === 0) {
+        return acc;
+      }
+      const color = colors[colorIndex % colors.length];
+      colorIndex++;
+      const chartData = {
+        label: streamData.stream.streamId,
+        borderColor: color,
+        data: streamStatsArray.reduce((acc, streamStats) => {
+            return acc.concat({
+              x: streamStats.createdAt,
+              y: streamStats.videoBitrateKbps
+            })
+          }, []),
+      };
+      return acc.concat(chartData)
+    }, []);
+  }
   async componentDidMount() {
     let sessionIds = map(await this.getSessions(), (session) => `"${session.sessionId}"`);
     // For now, I am using a session ID that I know has stream stats in the database:
     sessionIds = ['"2_MX4xMDB-flR1ZSBOb3YgMTkgMTE6MDk6NTggUFNUIDIwMTN-MC4zNzQxNzIxNX4"']
     const sessionsInfo = await this.getSessionsInfo(sessionIds);
-    let streamStatsCollection; 
+    let streamChartData; 
     sessionsInfo.find(sessionInfo => {
       if (sessionInfo.publisherMinutes < 2) {
         return false;
       }
       const foundMeetingWithStats = sessionInfo.meetings.resources.find(meeting => {
         const foundStats = meeting.publishers.resources.find(pubResources => {
-          const streamStatsArray = get(pubResources, 'streamStatsCollection.resources', 0);
-          console.log(streamStatsArray);
-          streamStatsCollection = streamStatsArray;
-          if (streamStatsArray.length > 4) {
+          const streamStatsCollection = get(pubResources, 'streamStatsCollection.resources', 0);
+          if (streamStatsCollection.length > 4) {
             return true;
           }
           return false;
         });
-        // console.log(1)
         return foundStats;
-      })
+      });
+      const streamArray = get(foundMeetingWithStats, 'publishers.resources', []);
+      streamChartData = this.convertStreamArrayToChartData(streamArray);
+      console.log(JSON.stringify(streamChartData, null, 2));
       return foundMeetingWithStats;
     });
-    console.log(333, streamStatsCollection)
     this.setState({
-      sessionsInfo,
+      streamChartData,
       loading: false,
     });
   }
   render() {
     if (this.state.loading) return <Loading />;
     return (
-      <Line data={ this.state.mockData } />
+      <Line
+        data={{
+          datasets: this.state.streamChartData
+        }}
+        options={{
+          scales: {
+            xAxes: [{
+              type: 'time'
+            }]
+          }}
+        }
+      />
     );
   }
 }
