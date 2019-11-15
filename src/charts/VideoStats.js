@@ -57,27 +57,6 @@ const sessionQuery = sessionIds => gql`
 }
 `;
 
-
-const query = gql`
-  {
-    project(projectId: ${apiKey}) {
-      projectData(
-        start: ${moment().subtract(120, 'days')},
-        interval: DAILY
-      ) { 
-        resources {
-          intervalStart,
-          intervalEnd,
-          usage {
-            streamedPublishedMinutes,
-            streamedSubscribedMinutes
-          }
-        }
-      }
-    }
-  }
-`;
-
 class VideoStats extends Component {
   constructor(props) {
     super(props);
@@ -110,6 +89,7 @@ class VideoStats extends Component {
       const chartData = {
         label: streamData.stream.streamId,
         borderColor: color,
+        fill: false,
         data: streamStatsArray.reduce((acc, streamStats) => {
             return acc.concat({
               x: streamStats.createdAt,
