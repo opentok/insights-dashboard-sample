@@ -149,10 +149,11 @@ class VideoStats extends Component {
             }],
             xAxes: [{
               type: 'time',
+              distribution: 'linear',
               time: {
-                unit: 'second',
+                unit: 'minute',
                 displayFormats: {
-                  second: 'MMM D, hh:mm:ss'
+                  minute: 'MMM D, hh:mm:ss'
                 }
               },
             }]
