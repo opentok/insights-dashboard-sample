@@ -79,18 +79,20 @@ class VideoStats extends Component {
     const colors = ['#66C5CC', '#F6CF71', '#F89C74', '#DCB0F2', '#87C55F',
       '#9EB9F3', '#FE88B1', '#C9DB74', '#8BE0A4', '#B497E7', '#D3B484', '#B3B3B3'];
     let colorIndex = 0;
-    return streamArray.reduce((acc, streamData) => {
+    const chartData = streamArray.reduce((acc, streamData) => {
       const streamStatsArray = get(streamData, 'streamStatsCollection.resources', []);
       if (streamStatsArray.length === 0) {
         return acc;
       }
       const color = colors[colorIndex % colors.length];
       colorIndex++;
+      const shortStreamId = streamData.stream.streamId.substring(0, 8)
       const chartData = {
-        label: streamData.stream.streamId,
         borderColor: color,
         fill: false,
+        label: `Stream ${shortStreamId}...`,
         data: streamStatsArray.reduce((acc, streamStats) => {
+            // minDate = Math.min(minDate, Date(streamStats.createdAt).getTime())
             return acc.concat({
               x: streamStats.createdAt,
               y: streamStats.videoBitrateKbps
@@ -99,13 +101,14 @@ class VideoStats extends Component {
       };
       return acc.concat(chartData)
     }, []);
+    return chartData;
   }
   async componentDidMount() {
     let sessionIds = map(await this.getSessions(), (session) => `"${session.sessionId}"`);
     // For now, I am using a session ID that I know has stream stats in the database:
     sessionIds = ['"2_MX4xMDB-flR1ZSBOb3YgMTkgMTE6MDk6NTggUFNUIDIwMTN-MC4zNzQxNzIxNX4"']
     const sessionsInfo = await this.getSessionsInfo(sessionIds);
-    let streamChartData; 
+    let streamChartData;
     sessionsInfo.find(sessionInfo => {
       if (sessionInfo.publisherMinutes < 2) {
         return false;
@@ -122,7 +125,6 @@ class VideoStats extends Component {
       });
       const streamArray = get(foundMeetingWithStats, 'publishers.resources', []);
       streamChartData = this.convertStreamArrayToChartData(streamArray);
-      console.log(JSON.stringify(streamChartData, null, 2));
       return foundMeetingWithStats;
     });
     this.setState({
@@ -139,8 +141,20 @@ class VideoStats extends Component {
         }}
         options={{
           scales: {
+            yAxes: [{
+              scaleLabel: {
+                display: true,
+                labelString: 'kbps'
+              }
+            }],
             xAxes: [{
-              type: 'time'
+              type: 'time',
+              time: {
+                unit: 'second',
+                displayFormats: {
+                  second: 'MMM D, hh:mm:ss'
+                }
+              },
             }]
           }}
         }
