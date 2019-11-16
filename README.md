@@ -146,7 +146,7 @@ This ensures that only those are accessible by the client, protecting your API s
 
 ### Publisher video bitrate for a meeting
 
-<img alt="Publisher video bitrate for a meeting" src="screenshots/session_minutes.png" />
+<img alt="Publisher video bitrate for a meeting" src="screenshots/video_bitrate.png" />
 
 #### Query to Insights API (Sample)
 
