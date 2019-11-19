@@ -182,7 +182,7 @@ input `endCursor` parameter to obtain the next page of data. For more informatio
   project(projectId: ${YOUR_API_KEY}) {
     sessionData {
       sessions(sessionIds: ["${YOUR_SESSION_ID}"]) {
-        resource {
+        resources {
           sessionId
           publisherMinutes
           subscriberMinutes

@@ -128,7 +128,7 @@ class UsageBySession extends Component {
           <TableFooter style={{ padding: "50px" }}>
             <TableRow>
               <TableCell>
-                Showing {this.state.sessionsInfo.length} of {this.state.totalCount} results.
+                Showing {sessionsInfo.length} of {this.state.totalCount} results.
                 <Link
                   onClick={handleNext}
                   size="small"
