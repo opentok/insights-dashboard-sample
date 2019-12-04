@@ -166,7 +166,7 @@ This ensures that only those are accessible by the client, protecting your API s
 }
 ```
 
-##### You can then get the stream statistics (such as the video bitrate) for streams a session:
+##### You can then get the stream statistics (such as the video bitrate) for for publishers and subscribers in a session:
 ```
 {
   project(projectId: ${YOUR_API_KEY}) {
