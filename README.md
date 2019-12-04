@@ -152,13 +152,19 @@ This ensures that only those are accessible by the client, protecting your API s
 
 #### Query to Insights API (Sample)
 
-##### This query will return all your session IDs from the last 10 days.
+##### This query will return pages (50 results each) of your session IDs from the last 10 days:
 ```
 {
   project(projectId: ${YOUR_API_KEY}) {
     sessionData {
-      sessionSummaries(start: ${moment().subtract(10, 'days')}) {
+      sessionSummaries(
+        start: ${moment().subtract(10, 'days')}
+        endCursor: "${END_CURSOR}"
+      ) {
         totalCount
+        pageInfo {
+          endCursor
+        }
         resources {
           sessionId
         }
@@ -167,13 +173,18 @@ This ensures that only those are accessible by the client, protecting your API s
   }
 }
 ```
+
+Note that you use the `endCursor` value of the returned `pageInfo` data as the
+input `endCursor` parameter to obtain the next page of data. For more information, see
+[Using Pagination in Queries](https://tokbox.com/developer/guides/insights/#using-pagination-in-queries).
+
 ##### You can then get the total publisher and subscriber minutes for a single session as follows:
 ```
 {
   project(projectId: ${YOUR_API_KEY}) {
     sessionData {
       sessions(sessionIds: ["${YOUR_SESSION_ID}"]) {
-        resource {
+        resources {
           sessionId
           publisherMinutes
           subscriberMinutes
