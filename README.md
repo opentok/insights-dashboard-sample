@@ -146,6 +146,61 @@ This ensures that only those are accessible by the client, protecting your API s
 }
 ```
 
+### Publisher video bitrate for a meeting
+
+<img alt="Publisher video bitrate for a meeting" src="screenshots/video_bitrate.png" />
+
+#### Query to Insights API (Sample)
+
+##### This query will return all your session IDs from the last 10 days.
+```
+{
+  project(projectId: ${YOUR_API_KEY}) {
+    sessionData {
+      sessionSummaries(start: ${moment().subtract(10, 'days')}) {
+        totalCount
+        resources {
+          sessionId
+        }
+      }
+    }
+  }
+}
+```
+
+##### You can then get the stream statistics (such as the video bitrate) for for publishers and subscribers in a session:
+```
+{
+  project(projectId: ${YOUR_API_KEY}) {
+    sessionData {
+      sessions(sessionIds: ["${YOUR_SESSION_ID}"]) {
+        resources {
+          publisherMinutes
+          meetings {
+            resources {
+              publishers {
+                totalCount
+                resources {
+                  stream {
+                    streamId
+                  }
+                  streamStatsCollection {
+                    resources {
+                      videoBitrateKbps
+                      createdAt
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }  
+      }
+    }
+  }
+}
+```
+
 ### Publisher and Subscriber minutes by Session
 
 <img alt="Publisher and Subscriber minutes by Session" src="screenshots/session_minutes.png" />

@@ -6,6 +6,7 @@ import UsageBySession from './charts/UsageBySession';
 import SdkDistribution from './charts/SdkDistribution';
 import FailuresByBrowser from './charts/FailuresByBrowser';
 import BitrateByCountry from './charts/BitrateByCountry';
+import VideoStats from './charts/VideoStats';
 import './css/App.css';
 
 class App extends Component {
@@ -23,6 +24,9 @@ class App extends Component {
         </ChartContainer>
         <ChartContainer titleIcon="bar" title="Bitrate by Country">
           <BitrateByCountry />
+        </ChartContainer>
+        <ChartContainer titleIcon="area" title="Publisher Video Bitrate">
+          <VideoStats />
         </ChartContainer>
         <TableContainer titleIcon="table" title="Publisher and Subscriber minutes by Session">
           <UsageBySession />
