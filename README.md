@@ -1,4 +1,7 @@
 # Insights Dashboard Sample
+
+<img src="https://assets.tokbox.com/img/vonage/Vonage_VideoAPI_black.svg" height="48px" alt="Tokbox is now known as Vonage" />
+
 Dashboard Sample which makes use of OpenTok Insights GraphQL API
 
 ## Preview
@@ -44,13 +47,14 @@ This ensures that only those are accessible by the client, protecting your API s
 <img alt="Usage by Day" src="screenshots/usage_chart.png" width="580" />
 
 #### Query to Insights API (Sample)
+
 ```
 {
   project(projectId: ${YOUR_API_KEY}) {
     projectData(
       start: ${moment().subtract(10, 'days')},
       interval: DAILY
-    ) { 
+    ) {
       resources {
         intervalStart,
         intervalEnd,
@@ -69,6 +73,7 @@ This ensures that only those are accessible by the client, protecting your API s
 <img alt="SDK Distribution" src="screenshots/sdk_chart.png" width="580" />
 
 #### Query to Insights API (Sample)
+
 ```
 {
   project(projectId: ${YOUR_API_KEY}) {
@@ -93,6 +98,7 @@ This ensures that only those are accessible by the client, protecting your API s
 <img alt="Failures by Browser" src="screenshots/failures_chart.png" width="580" />
 
 #### Query to Insights API (Sample)
+
 ```
 {
   project(projectId: ${YOUR_API_KEY}) {
@@ -100,7 +106,7 @@ This ensures that only those are accessible by the client, protecting your API s
       start: ${moment().subtract(10, 'days')},
       groupBy: BROWSER_NAME,
       browserName: [CHROME, FIREFOX, IE]
-    ) { 
+    ) {
       resources {
         browserName,
         errors {
@@ -125,6 +131,7 @@ This ensures that only those are accessible by the client, protecting your API s
 <img alt="Bitrate by Country" src="screenshots/bitrate_chart.png" width="580" />
 
 #### Query to Insights API (Sample)
+
 ```
 {
   project(projectId: ${YOUR_API_KEY}) {
@@ -153,6 +160,7 @@ This ensures that only those are accessible by the client, protecting your API s
 #### Query to Insights API (Sample)
 
 ##### This query will return all your session IDs from the last 10 days.
+
 ```
 {
   project(projectId: ${YOUR_API_KEY}) {
@@ -169,6 +177,7 @@ This ensures that only those are accessible by the client, protecting your API s
 ```
 
 ##### You can then get the stream statistics (such as the video bitrate) for for publishers and subscribers in a session:
+
 ```
 {
   project(projectId: ${YOUR_API_KEY}) {
@@ -194,7 +203,7 @@ This ensures that only those are accessible by the client, protecting your API s
               }
             }
           }
-        }  
+        }
       }
     }
   }
@@ -208,6 +217,7 @@ This ensures that only those are accessible by the client, protecting your API s
 #### Query to Insights API (Sample)
 
 ##### This query will return pages (50 results each) of your session IDs from the last 10 days:
+
 ```
 {
   project(projectId: ${YOUR_API_KEY}) {
@@ -234,6 +244,7 @@ input `endCursor` parameter to obtain the next page of data. For more informatio
 [Using Pagination in Queries](https://tokbox.com/developer/guides/insights/#using-pagination-in-queries).
 
 ##### You can then get the total publisher and subscriber minutes for a single session as follows:
+
 ```
 {
   project(projectId: ${YOUR_API_KEY}) {
@@ -254,6 +265,7 @@ input `endCursor` parameter to obtain the next page of data. For more informatio
 ```
 
 ##### Additionally, you can get the publisherMinutes and subscriberMinutes of each one of the meetings in the session.
+
 ```
 {
   project(projectId: ${YOUR_API_KEY}) {
@@ -273,3 +285,21 @@ input `endCursor` parameter to obtain the next page of data. For more informatio
   }
 }
 ```
+
+## Development and Contributing
+
+Interested in contributing? We :heart: pull requests! See the
+[Contribution](CONTRIBUTING.md) guidelines.
+
+## Getting Help
+
+We love to hear from you so if you have questions, comments or find a bug in the project, let us know! You can either:
+
+- Open an issue on this repository
+- See <https://support.tokbox.com/> for support options
+- Tweet at us! We're [@VonageDev](https://twitter.com/VonageDev) on Twitter
+- Or [join the Vonage Developer Community Slack](https://developer.nexmo.com/community/slack)
+
+## Further Reading
+
+- Check out the Developer Documentation at <https://tokbox.com/developer/>
