@@ -1,11 +1,9 @@
-import React, { Component } from 'react';
-import '../css/Loading.css';
+import React, { Component } from "react";
+import "../css/Loading.css";
 
 class Loading extends Component {
   render() {
-    return (
-      <div className="loading"></div>
-    );
+    return <div className="loading"></div>;
   }
 }
 

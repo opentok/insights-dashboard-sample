@@ -1,7 +1,7 @@
-require('dotenv').config();
+require("dotenv").config();
 
-const express = require('express');
-const jwt = require('jsonwebtoken');
+const express = require("express");
+const jwt = require("jsonwebtoken");
 
 const API_KEY = process.env.REACT_APP_API_KEY;
 const API_SECRET = process.env.API_SECRET;
@@ -12,7 +12,9 @@ const PORT = process.env.SERVER_PORT || 4000;
  * Ensure all the required variables are set for the environment
  */
 if (!API_KEY || !API_SECRET || !CLIENT_URL) {
-  console.error('You need to set your env variables before running the project.');
+  console.error(
+    "You need to set your env variables before running the project."
+  );
   return;
 }
 
@@ -25,7 +27,7 @@ const app = express();
  * CORS Middleware - Allow the client to consume the server API
  */
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', CLIENT_URL);
+  res.header("Access-Control-Allow-Origin", CLIENT_URL);
   next();
 });
 
@@ -33,18 +35,23 @@ app.use((req, res, next) => {
  * /token - Get a jwt with the configured variables
  * @returns {JSON}
  */
-app.get('/token', (req, res) => {
+app.get("/token", (req, res) => {
   const currentTime = Math.floor(new Date() / 1000);
-  const token = jwt.sign({
-    iss: API_KEY,
-    ist: 'project',
-    iat: currentTime,
-    exp: currentTime + (60 * 60) // 1 hour
-  }, API_SECRET);
-  res.send(JSON.stringify({
-    API_KEY,
-    token,
-  }));
+  const token = jwt.sign(
+    {
+      iss: API_KEY,
+      ist: "project",
+      iat: currentTime,
+      exp: currentTime + 60 * 60, // 1 hour
+    },
+    API_SECRET
+  );
+  res.send(
+    JSON.stringify({
+      API_KEY,
+      token,
+    })
+  );
 });
 
 /**
