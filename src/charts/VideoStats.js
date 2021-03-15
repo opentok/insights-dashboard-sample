@@ -71,6 +71,7 @@ class VideoStats extends Component {
     return get(results.data, 'project.sessionData.sessionSummaries.resources', []);
   }
   getSessionsInfo = async (sessionIds) => {
+    return [];
     const query = { query: sessionQuery(sessionIds) };
     const results = await this.props.client.query(query);
     return get(results.data, 'project.sessionData.sessions.resources', []);
