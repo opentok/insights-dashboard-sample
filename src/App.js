@@ -29,6 +29,9 @@ class App extends Component {
         <ChartContainer titleIcon="area" title="Publisher Video Bitrate">
           <VideoStats />
         </ChartContainer>
+        <TableContainer titleIcon="table" title="Publisher and Subscriber minutes by Session">
+          <UsageBySession />
+        </TableContainer>
         <ChartContainer titleIcon="area" title="Participant Pricing Model Usage">
            <UsageByParticipantTier />
         </ChartContainer>
