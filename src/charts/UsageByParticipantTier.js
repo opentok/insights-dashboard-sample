@@ -43,23 +43,6 @@ const query = gql`
     }
   }
 `;
-//
-//
-//participantMinutes: {from1To2Publishers: 1641, from3To6Publishers: 1441, from7To8Publishers: 1675,…}
-//from1To2Publishers: 1641
-//from1To4Publishers: 1668
-//from1To8Publishers: 1658
-//from1To10Publishers: 1441
-//from3To6Publishers: 1441
-//from5To8Publishers: 1629
-//from7To8Publishers: 1675
-//from9To10Publishers: 1714
-//from11To20Publishers: 1547
-//from11To35Publishers: 1709
-//from21To35Publishers: 1430
-//from36PlusPublishers: 1428
-//from36To40Publishers: 1498
-//from41PlusPublishers: 1571
 
 class UsageByParticipantTier extends Component {
   render() {
