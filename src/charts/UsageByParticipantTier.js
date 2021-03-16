@@ -20,23 +20,23 @@ const query = gql`
           intervalStart,
           intervalEnd,
           usage {
-          participantMinutes{
-            from1To2Publishers
-            from3To6Publishers
-            from7To8Publishers
-            from1To4Publishers
-            from5To8Publishers
-            from1To8Publishers
-            from1To10Publishers
-            from9To10Publishers
-            from11To35Publishers
-            from11To20Publishers
-            from11To35Publishers
-            from36PlusPublishers
-            from21To35Publishers
-            from36To40Publishers
-            from41PlusPublishers
-          }
+            participantMinutes{
+              from1To2Publishers
+              from3To6Publishers
+              from7To8Publishers
+              from1To4Publishers
+              from5To8Publishers
+              from1To8Publishers
+              from1To10Publishers
+              from9To10Publishers
+              from11To35Publishers
+              from11To20Publishers
+              from11To35Publishers
+              from36PlusPublishers
+              from21To35Publishers
+              from36To40Publishers
+              from41PlusPublishers
+            }
           }
         }
       }
