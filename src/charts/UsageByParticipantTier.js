@@ -102,6 +102,8 @@ class UsageByParticipantTier extends Component {
            format="MM/DD/yyyy"
            margin="normal"
            id="date-picker-inline"
+           minDate={moment(endDate).subtract(1, 'year').startOf('day')}
+           maxDate={endDate}
            label="Start Date"
            value={startDate}
            onChange={this.setStartDate}
@@ -113,6 +115,8 @@ class UsageByParticipantTier extends Component {
              margin="normal"
              id="date-picker-inline"
              label="End Date"
+             minDate={startDate}
+             maxDate={moment(startDate).add(1, 'year').startOf('day')}
              value={endDate}
              onChange={this.setEndDate}
             />
