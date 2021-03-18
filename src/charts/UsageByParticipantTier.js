@@ -14,32 +14,32 @@ const apiKey = process.env.REACT_APP_API_KEY;
 const ppmDisplaySettings = [
  {
     label: '1 - 2 publishers',
-    backgroundColor: '#06ba77',
+    backgroundColor: 'rgba(6, 186, 119, 0.4)',
     key: 'from1To2Publishers'
   },
 {
     label: '3 - 6 publishers',
-    backgroundColor: '#9941ff',
+    backgroundColor: 'rgba(153, 65, 255, 0.4)',
     key: 'from3To6Publishers'
   },
 {
     label: '7 - 8 publishers',
-    backgroundColor: '#fa7454',
+    backgroundColor: 'rgba(250, 116, 84, 0.7)',
     key: 'from7To8Publishers'
   },
 {
     label: '9 - 10 publishers',
-    backgroundColor: '#d6219c',
+    backgroundColor: 'rgba(214, 33, 156, 0.6)',
     key: 'from9To10Publishers'
   },
 {
     label: '11 - 35 publishers',
-    backgroundColor: '#003f5f',
+    backgroundColor: 'rgba(0, 63, 95, 0.4)',
     key: 'from11To35Publishers'
   },
 {
     label: '> 35 publishers',
-    backgroundColor: '#e84545',
+    backgroundColor: 'rgba(232, 69, 69, 0.4)',
     key: 'from36PlusPublishers'
   }
 ];
