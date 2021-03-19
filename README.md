@@ -98,7 +98,7 @@ This ensures that only those are accessible by the client, protecting your API s
 
 #### Query to Insights API (Sample)
 
-Below is the generic query to Insights API to get specified tier related insights.
+Here is the generic query to Insights API to get specified tier related insights:
 
 ```      
 {
@@ -121,15 +121,14 @@ Below is the generic query to Insights API to get specified tier related insight
                 from36To40Publishers
                 from41PlusPublishers
             }
-            }
           }
         }
       }
-    }      
+    }
+}      
 ```
-However, you can add or remove more tiers according to your rate plan at ppmDisplaySettings variable in the Application .
-
-Reference: UsageByParticipantTier.js L#14
+However, you can add or remove more tiers according to your rate plan by adjusting
+the `ppmDisplaySettings` property in the src/charcts/UsageByParticipantTier.js file:
 ```
 const ppmDisplaySettings = [
  {
@@ -137,15 +136,17 @@ const ppmDisplaySettings = [
     backgroundColor: 'rgba(6, 186, 119, 0.4)',
     key: 'from1To2Publishers'
   },
-{
+  {
     label: '3 - 6 publishers',
     backgroundColor: 'rgba(153, 65, 255, 0.4)',
     key: 'from3To6Publishers'
-  }];
+  }
+];
 
 ```
 
-The above variable is used to generate graphql Query similar to above mentioned sample query and populate the stacked area chart.
+This examples is used to generate a GraphQL query similar to the sample query shown above
+and populate the stacked area chart.
 
 ### Failures by Browser
 
