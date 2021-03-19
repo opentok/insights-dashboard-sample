@@ -92,6 +92,60 @@ This ensures that only those are accessible by the client, protecting your API s
   }
 }
 ```
+###  Participant Pricing Model Usage
+
+<img alt="Participant Pricing Model Usage" src="screenshots/ppm_chart.png" width="580" />
+
+#### Query to Insights API (Sample)
+
+Below is the generic query to Insights API to get specified tier related insights.
+
+```      
+{
+      project(projectId: ${apiKey}) {
+        projectData(
+          start: ${moment(startDate)},
+          end:  ${moment(endDate)},
+          interval: DAILY
+        ) {
+          resources {
+            intervalStart,
+            intervalEnd,
+            usage {
+            participantMinutes{
+                from1To2Publishers
+                from3To6Publishers
+                from7To8Publishers
+                from9To10Publishers
+                from11To35Publishers
+                from36To40Publishers
+                from41PlusPublishers
+            }
+            }
+          }
+        }
+      }
+    }      
+```
+However, you can add or remove more tiers according to your rate plan at ppmDisplaySettings variable in the Application .
+
+Reference: UsageByParticipantTier.js L#14
+```
+const ppmDisplaySettings = [
+ {
+    label: '1 - 2 publishers',
+    backgroundColor: 'rgba(6, 186, 119, 0.4)',
+    key: 'from1To2Publishers'
+  },
+{
+    label: '3 - 6 publishers',
+    backgroundColor: 'rgba(153, 65, 255, 0.4)',
+    key: 'from3To6Publishers'
+  }];
+
+```
+
+The above variable is used to generate graphql Query similar to above mentioned sample query and populate the stacked area chart.
 
 ### Failures by Browser
 
