@@ -4,7 +4,7 @@ import '../css/Loading.css';
 class Loading extends Component {
   render() {
     return (
-      <div className="loading"></div>
+      <div className="loading" style={{background: 'url(/images/spinner.gif)'}}></div>
     );
   }
 }

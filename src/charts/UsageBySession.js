@@ -84,7 +84,7 @@ class UsageBySession extends Component {
   getSessionsInfo = async () => {
     const sessionIds = map(await this.getSessions(this.state.endCursor), (session) => `"${session.sessionId}"`);
     const query = { query: sessionQuery(sessionIds) };
-    const results = await this.props.client.query(query);
+    const results = (sessionIds.length > 0 )  ? await this.props.client.query(query) : [];
     const sessionsInfo = get(results.data, 'project.sessionData.sessions.resources', []);
     this.setState({
       sessionsInfo: this.state.sessionsInfo.concat(sessionsInfo),

@@ -72,7 +72,7 @@ class VideoStats extends Component {
   }
   getSessionsInfo = async (sessionIds) => {
     const query = { query: sessionQuery(sessionIds) };
-    const results = await this.props.client.query(query);
+    const results = (sessionIds.length > 0 )  ? await this.props.client.query(query) : [];
     return get(results.data, 'project.sessionData.sessions.resources', []);
   }
   convertStreamArrayToChartData = (meeting) => {
