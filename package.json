@@ -20,7 +20,7 @@
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.19",
     "minimist": ">=1.2.3",
-    "moment": "^2.29.1",
+    "moment": "^2.29.2",
     "react": "^16.9.0",
     "react-apollo": "^3.0.1",
     "react-chartjs-2": "^2.7.6",
