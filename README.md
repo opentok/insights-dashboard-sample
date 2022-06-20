@@ -345,14 +345,14 @@ input `endCursor` parameter to obtain the next page of data. For more informatio
 
 #### Query to Insights API (Sample)
 
-##### This query will return the total daily minutes that Experience Composer publishes to a video session (independent of an archiver or broadcast composer), publishes to a video session connected to an archiver, and publishes to a video session connected to a broadcast composer:
+##### This query will return the total usage that `experienceComposer` publishes to a video session (independent of an archiver or broadcast composer), `experienceComposerArchive` publishes to a video session connected to an archiver, and `experienceComposerBroadcast` publishes to a video session connected to a broadcast composer:
 
 ```
 {
   project(projectId: ${apiKey}) {
     projectData(
       start: ${moment(startDate)},
-      end:${moment(endDate)},
+      end: ${moment(endDate)},
       interval: DAILY
     ) {
       resources {
@@ -362,7 +362,6 @@ input `endCursor` parameter to obtain the next page of data. For more informatio
           experienceComposer,
           experienceComposerArchive,
           experienceComposerBroadcast
-          
         }
       }
     }
