@@ -341,6 +341,35 @@ input `endCursor` parameter to obtain the next page of data. For more informatio
 }
 ```
 
+### Experience Composer Usage Data
+
+#### Query to Insights API (Sample)
+
+##### This query will return the total daily minutes that Experience Composer publishes to a video session (independent of an archiver or broadcast composer), publishes to a video session connected to an archiver, and publishes to a video session connected to a broadcast composer:
+
+```
+{
+  project(projectId: ${apiKey}) {
+    projectData(
+      start: ${moment(startDate)},
+      end:${moment(endDate)},
+      interval: DAILY
+    ) {
+      resources {
+        intervalStart,
+        intervalEnd,
+        usage {
+          experienceComposer,
+          experienceComposerArchive,
+          experienceComposerBroadcast
+          
+        }
+      }
+    }
+  }
+}
+```
+
 ## Development and Contributing
 
 Interested in contributing? We :heart: pull requests! See the
