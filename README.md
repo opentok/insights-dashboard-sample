@@ -349,7 +349,7 @@ input `endCursor` parameter to obtain the next page of data. For more informatio
 
 ```
 {
-  project(projectId: ${apiKey}) {
+  project(projectId: ${YOUR_API_KEY}) {
     projectData(
       start: ${moment(startDate)},
       end: ${moment(endDate)},
