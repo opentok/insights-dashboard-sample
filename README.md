@@ -345,7 +345,7 @@ input `endCursor` parameter to obtain the next page of data. For more informatio
 
 #### Query to Insights API (Sample)
 
-##### This query will return the total usage that `experienceComposer` publishes to a video session (independent of an archiver or broadcast composer), `experienceComposerArchive` publishes to a video session connected to an archiver, and `experienceComposerBroadcast` publishes to a video session connected to a broadcast composer:
+##### This query will return the daily total minutes that `experienceComposer` publishes to a video session (independent of an archiver or broadcast composer), `experienceComposerArchive` publishes to a video session connected to an archiver, and `experienceComposerBroadcast` publishes to a video session connected to a broadcast composer:
 
 ```
 {
