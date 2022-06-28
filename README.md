@@ -345,7 +345,7 @@ input `endCursor` parameter to obtain the next page of data. For more informatio
 
 #### Query to Insights API (Sample)
 
-##### This query will return the daily total minutes that `experienceComposer` publishes to a video session (independent of an archiver or broadcast composer), `experienceComposerArchive` publishes to a video session connected to an archiver, and `experienceComposerBroadcast` publishes to a video session connected to a broadcast composer:
+##### This query returns the daily total minutes that [Experience Composer](https://tokbox.com/developer/guides/experience-composer) publishes to a video session (independent of an archiver or broadcast composer), Experience Composer publishes to a video session being archived, and Experience Composer publishes to a video session being sent to a live-streaming broadcast:
 
 ```
 {
