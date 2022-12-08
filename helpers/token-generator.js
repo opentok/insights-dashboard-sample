@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const fs = require('fs');
+const { v1 } = require('uuid');
 
 const EXPIRATION_SECS = (60 * 60); // 1 hour
 
@@ -15,11 +15,14 @@ const createTokenTokBox = (apiKey, apiSecret) => {
   }, apiSecret);
 };
 
-const createTokenNexmo = (applicationId, privateKeyPath) => {
-  const privateKey = fs.readFileSync(privateKeyPath);
+const createTokenNexmo = (applicationId, privateKey) => {
+  if (!(privateKey instanceof Buffer)) {
+    throw new Error("You must set up your private key file.");
+  }
   const currentTime = getCurrentTime();
   return jwt.sign({
     iat: currentTime,
+    jti: v1(),
     exp: currentTime + EXPIRATION_SECS,
     application_id: applicationId
   }, privateKey, { algorithm: "RS256" });
