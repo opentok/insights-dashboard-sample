@@ -131,9 +131,7 @@ class VideoStats extends Component {
         });
       });
     } catch (error) {
-      this.setState({
-        error
-      });
+      this.setState({ error });
     }
     const streamChartData = this.convertStreamArrayToChartData(meetingWithMostStats);
     this.setState({

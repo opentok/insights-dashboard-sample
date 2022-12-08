@@ -51,7 +51,7 @@ app.use((req, res, next) => {
  */
 app.get('/token', (req, res) => {
   const token = isTokBoxApiKey ?
-  createTokenTokBox(API_KEY, API_SECRET) :
+    createTokenTokBox(API_KEY, API_SECRET) :
     createTokenNexmo(API_KEY, privateKey);
   res.send(JSON.stringify({
     API_KEY,
