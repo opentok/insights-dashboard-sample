@@ -14,6 +14,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Loading from '../components/Loading';
 import NoResultsFound from '../components/NoResultsFound';
+import ErrorMessage from '../components/ErrorMessage';
 import round from './helpers/round';
 
 const apiKey = process.env.REACT_APP_API_KEY;
@@ -21,7 +22,7 @@ const apiKey = process.env.REACT_APP_API_KEY;
 /* Get all session IDs from the last 10 days */
 const sessionSummariesQuery = endCursor => gql`
   {
-    project(projectId: ${apiKey}) {
+    project(projectId: "${apiKey}") {
       sessionData {
         sessionSummaries(
           start: ${moment().subtract(10, 'days')}
@@ -43,7 +44,7 @@ const sessionSummariesQuery = endCursor => gql`
 /* Get the publisherMinutes and subscriberMinutes for every session Id within sessionIds */
 const sessionQuery = sessionIds => gql`
   {
-    project(projectId: ${apiKey}) {
+    project(projectId: "${apiKey}") {
       sessionData {
         sessions(sessionIds: [${sessionIds}]) {
           resources {
@@ -92,16 +93,27 @@ class UsageBySession extends Component {
   }
   
   async componentDidMount() {
-    await this.getSessionsInfo();
+    try {
+      await this.getSessionsInfo();
+    }
+    catch (error) {
+      this.setState({ error });
+    }
     this.setState({ loading: false });
   }
   render() {
-    const { sessionsInfo, loading } = this.state;
+    const { sessionsInfo, loading, error } = this.state;
     if (loading) return <Loading />;
+    if (error) return <ErrorMessage error={error.message} />;
     if (sessionsInfo.length === 0) return <NoResultsFound />;
     const handleNext = async () => {
       this.setState({ loadingMore: true });
-      await this.getSessionsInfo();
+      try {
+        await this.getSessionsInfo();
+      }
+      catch (error) {
+        this.setState({ error });
+      }
       this.setState({ loadingMore: false });
     }
     return (

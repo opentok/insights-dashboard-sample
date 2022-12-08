@@ -32,7 +32,8 @@ Environment Variable Names and Description:
 
 - `REACT_APP_INSIGHTS_URL` (Required): The URL for the OpenTok Insights API server.
 - `REACT_APP_API_KEY` (Required): Your OpenTok API Key.
-- `API_SECRET` (Required): Your OpenTok API Secret.
+- `API_SECRET` (Required only for TokBox users): Your OpenTok API Secret (For TokBox users, only).
+- `PRIVATE_KEY_PATH` (Required only for Nexmo users): Your Private Key (For Nexmo users, only).
 - `SERVER_PORT` (Required): The port number for your server to run on.
 - `REACT_APP_SERVER_URL` (Required): The URL for your server app.
 - `APP_CLIENT_URL` (Required): The URL for your client app.
@@ -50,7 +51,7 @@ This ensures that only those are accessible by the client, protecting your API s
 
 ```
 {
-  project(projectId: ${YOUR_API_KEY}) {
+  project(projectId: "${YOUR_API_KEY}") {
     projectData(
       start: ${moment().subtract(10, 'days')},
       interval: DAILY
@@ -76,7 +77,7 @@ This ensures that only those are accessible by the client, protecting your API s
 
 ```
 {
-  project(projectId: ${YOUR_API_KEY}) {
+  project(projectId: "${YOUR_API_KEY}") {
     projectData(
       start: ${moment().subtract(10, 'days')},
       groupBy: SDK_TYPE,
@@ -102,7 +103,7 @@ Here is the generic query to Insights API to get specified tier related insights
 
 ```      
 {
-      project(projectId: ${apiKey}) {
+      project(projectId: "${YOUR_API_KEY}") {
         projectData(
           start: ${moment(startDate)},
           end:  ${moment(endDate)},
@@ -156,7 +157,7 @@ and populate the stacked area chart.
 
 ```
 {
-  project(projectId: ${YOUR_API_KEY}) {
+  project(projectId: "${YOUR_API_KEY}") {
     projectData(
       start: ${moment().subtract(10, 'days')},
       groupBy: BROWSER_NAME,
@@ -189,7 +190,7 @@ and populate the stacked area chart.
 
 ```
 {
-  project(projectId: ${YOUR_API_KEY}) {
+  project(projectId: "${YOUR_API_KEY}") {
     projectData(
       start: ${moment().subtract(10, 'days')},
       groupBy: COUNTRY,
@@ -218,7 +219,7 @@ and populate the stacked area chart.
 
 ```
 {
-  project(projectId: ${YOUR_API_KEY}) {
+  project(projectId: "${YOUR_API_KEY}") {
     sessionData {
       sessionSummaries(start: ${moment().subtract(10, 'days')}) {
         totalCount
@@ -235,7 +236,7 @@ and populate the stacked area chart.
 
 ```
 {
-  project(projectId: ${YOUR_API_KEY}) {
+  project(projectId: "${YOUR_API_KEY}") {
     sessionData {
       sessions(sessionIds: ["${YOUR_SESSION_ID}"]) {
         resources {
@@ -275,7 +276,7 @@ and populate the stacked area chart.
 
 ```
 {
-  project(projectId: ${YOUR_API_KEY}) {
+  project(projectId: "${YOUR_API_KEY}") {
     sessionData {
       sessionSummaries(
         start: ${moment().subtract(10, 'days')}
@@ -302,7 +303,7 @@ input `endCursor` parameter to obtain the next page of data. For more informatio
 
 ```
 {
-  project(projectId: ${YOUR_API_KEY}) {
+  project(projectId: "${YOUR_API_KEY}") {
     sessionData {
       sessions(sessionIds: ["${YOUR_SESSION_ID}"]) {
         resources {
@@ -323,7 +324,7 @@ input `endCursor` parameter to obtain the next page of data. For more informatio
 
 ```
 {
-  project(projectId: ${YOUR_API_KEY}) {
+  project(projectId: "${YOUR_API_KEY}") {
     sessionData {
       sessions(sessionIds: ["${YOUR_SESSION_ID}"]) {
         resources {
@@ -349,7 +350,7 @@ input `endCursor` parameter to obtain the next page of data. For more informatio
 
 ```
 {
-  project(projectId: ${YOUR_API_KEY}) {
+  project(projectId: "${YOUR_API_KEY}") {
     projectData(
       start: ${moment(startDate)},
       end: ${moment(endDate)},

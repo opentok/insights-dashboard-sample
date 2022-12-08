@@ -73,7 +73,7 @@ class UsageByParticipantTier extends Component {
     ppmDisplaySettings.map(ppm => formattedPPM += `${ppm.key}\n`);
     const query = gql`
     {
-      project(projectId: ${apiKey}) {
+      project(projectId: "${apiKey}") {
         projectData(
           start: ${moment(startDate)},
           end:  ${moment(endDate)},

@@ -5,13 +5,14 @@ import { Line } from 'react-chartjs-2';
 import { get, map } from 'lodash';
 import moment from 'moment';
 import Loading from '../components/Loading';
+import ErrorMessage from '../components/ErrorMessage';
 
 const apiKey = process.env.REACT_APP_API_KEY;
 
 /* Get all session IDs from the last 10 days */
 const sessionSummariesQuery = gql`
   {
-    project(projectId: ${apiKey}) {
+    project(projectId: "${apiKey}") {
       sessionData {
         sessionSummaries(start: ${moment().subtract(10, 'days')}) {
           totalCount
@@ -27,7 +28,7 @@ const sessionSummariesQuery = gql`
 /* Get the publisherMinutes and subscriberMinutes for every session Id within sessionIds */
 const sessionQuery = sessionIds => gql`
 {
-  project(projectId: ${apiKey}) {
+  project(projectId: "${apiKey}") {
    sessionData {
     sessions(sessionIds: [${sessionIds}]) {
       resources {
@@ -109,25 +110,31 @@ class VideoStats extends Component {
     return chartData;
   }
   async componentDidMount() {
-    let sessionIds = map(await this.getSessions(), (session) => `"${session.sessionId}"`);
-    const sessionsInfo = await this.getSessionsInfo(sessionIds);
-    // Find the meeting that has the largest number of stream statistics
     let meetingWithMostStats = {};
-    let largestStatsCount = 0;
-    sessionsInfo.forEach(sessionInfo => {
-      const meetingArray = get(sessionInfo, 'meetings.resources', []);
-      meetingArray.forEach(meeting => {
-        let statsCount = 0;
-        const publisherArray = get(meeting, 'publishers.resources', []);
-        publisherArray.forEach(pubResources => {
-          statsCount += get(pubResources, 'streamStatsCollection.resources.length', 0);
+    try {
+      let sessionIds = map(await this.getSessions(), (session) => `"${session.sessionId}"`);
+      const sessionsInfo = await this.getSessionsInfo(sessionIds);
+      // Find the meeting that has the largest number of stream statistics
+      let largestStatsCount = 0;
+      sessionsInfo.forEach(sessionInfo => {
+        const meetingArray = get(sessionInfo, 'meetings.resources', []);
+        meetingArray.forEach(meeting => {
+          let statsCount = 0;
+          const publisherArray = get(meeting, 'publishers.resources', []);
+          publisherArray.forEach(pubResources => {
+            statsCount += get(pubResources, 'streamStatsCollection.resources.length', 0);
+          });
+          if (statsCount > largestStatsCount) {
+            meetingWithMostStats = meeting;
+            largestStatsCount = statsCount;
+          }
         });
-        if (statsCount > largestStatsCount) {
-          meetingWithMostStats = meeting;
-          largestStatsCount = statsCount;
-        }
       });
-    });
+    } catch (error) {
+      this.setState({
+        error
+      });
+    }
     const streamChartData = this.convertStreamArrayToChartData(meetingWithMostStats);
     this.setState({
       streamChartData,
@@ -135,7 +142,9 @@ class VideoStats extends Component {
     });
   }
   render() {
+    const error = this.state.error;
     if (this.state.loading) return <Loading />;
+    if (error) return <ErrorMessage error={error.message} />;
     return (
       <Line
         data={{

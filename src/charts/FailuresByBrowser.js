@@ -11,7 +11,7 @@ const apiKey = process.env.REACT_APP_API_KEY;
 
 const query = gql`
   {
-    project(projectId: ${apiKey}) {
+    project(projectId: "${apiKey}") {
       projectData(
         start: ${moment().subtract(10, 'days')},
         groupBy: BROWSER,
