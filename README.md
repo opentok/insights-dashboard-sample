@@ -32,8 +32,8 @@ Environment Variable Names and Description:
 
 - `REACT_APP_INSIGHTS_URL` (Required): The URL for the OpenTok Insights API server.
 - `REACT_APP_API_KEY` (Required): Your OpenTok API Key.
-- `API_SECRET` (Required only for TokBox users): Your OpenTok API Secret (For TokBox users, only).
-- `PRIVATE_KEY_PATH` (Required only for Nexmo users): Your Private Key (For Nexmo users, only).
+- `API_SECRET` (Required when using an OpenTok project): The OpenTok API secret (For OpenTok projects, only).
+- `PRIVATE_KEY_PATH` (Required when using a Vonage application): The file path to the private key (for your Vonage application, only).
 - `SERVER_PORT` (Required): The port number for your server to run on.
 - `REACT_APP_SERVER_URL` (Required): The URL for your server app.
 - `APP_CLIENT_URL` (Required): The URL for your client app.
