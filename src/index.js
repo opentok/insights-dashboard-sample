@@ -11,11 +11,16 @@ import App from './App';
 
 const SERVER_URL = process.env.REACT_APP_SERVER_URL;
 const INSIGHTS_URL = process.env.REACT_APP_INSIGHTS_URL;
+const API_KEY = process.env.REACT_APP_API_KEY;
+
+const isTokBoxApiKey = /^-?\d+$/.test(API_KEY);
+const headerKey = isTokBoxApiKey ? 'X-OPENTOK-AUTH' : 'Authorization';
+const headerValue = isTokBoxApiKey ? '$token' : 'Bearer $token';
 
 const authMiddleware = setContext(() =>
   get(urlJoin(SERVER_URL, '/token'))
     .then(({ data }) => ({
-      headers: { 'X-OPENTOK-AUTH': data.token }
+      headers: { [headerKey]: headerValue.replace('$token', data.token) }
     }))
 );
 

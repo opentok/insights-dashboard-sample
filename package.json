@@ -26,7 +26,8 @@
     "react-chartjs-2": "^2.7.6",
     "react-dom": "^16.9.0",
     "react-scripts": "^4.0.3",
-    "url-join": "^4.0.1"
+    "url-join": "^4.0.1",
+    "uuid": "^9.0.0"
   },
   "scripts": {
     "start": "concurrently \"npm run server\" \"npm run client\"",

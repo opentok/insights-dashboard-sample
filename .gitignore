@@ -20,3 +20,4 @@
 .env.production.local
 
 npm-debug.log*
+private.key
