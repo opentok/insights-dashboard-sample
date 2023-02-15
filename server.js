@@ -1,19 +1,35 @@
 require('dotenv').config();
 
 const express = require('express');
-const jwt = require('jsonwebtoken');
+const fs = require('fs');
+const { createTokenTokBox, createTokenNexmo } = require('./helpers/token-generator');
 
 const API_KEY = process.env.REACT_APP_API_KEY;
 const API_SECRET = process.env.API_SECRET;
+const PRIVATE_KEY_PATH = process.env.PRIVATE_KEY_PATH;
 const CLIENT_URL = process.env.APP_CLIENT_URL;
 const PORT = process.env.SERVER_PORT || 4000;
+
+const isTokBoxApiKey = /^-?\d+$/.test(API_KEY);
+let privateKey;
 
 /**
  * Ensure all the required variables are set for the environment
  */
-if (!API_KEY || !API_SECRET || !CLIENT_URL) {
+if (!API_KEY || !CLIENT_URL) {
   console.error('You need to set your env variables before running the project.');
   return;
+}
+if (!API_SECRET && isTokBoxApiKey) {
+  console.error('You need to set your secret.');
+  return;
+}
+if (!isTokBoxApiKey) {
+  if (!PRIVATE_KEY_PATH) {
+    console.error('You need to set your private key.');
+    return;
+  }
+  privateKey = fs.readFileSync(PRIVATE_KEY_PATH);
 }
 
 /**
@@ -34,13 +50,9 @@ app.use((req, res, next) => {
  * @returns {JSON}
  */
 app.get('/token', (req, res) => {
-  const currentTime = Math.floor(new Date() / 1000);
-  const token = jwt.sign({
-    iss: API_KEY,
-    ist: 'project',
-    iat: currentTime,
-    exp: currentTime + (60 * 60) // 1 hour
-  }, API_SECRET);
+  const token = isTokBoxApiKey ?
+    createTokenTokBox(API_KEY, API_SECRET) :
+    createTokenNexmo(API_KEY, privateKey);
   res.send(JSON.stringify({
     API_KEY,
     token,
