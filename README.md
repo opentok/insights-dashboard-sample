@@ -342,34 +342,6 @@ input `endCursor` parameter to obtain the next page of data. For more informatio
 }
 ```
 
-### Experience Composer Usage Data
-
-#### Query to Insights API (Sample)
-
-##### This query returns the daily total minutes that [Experience Composer](https://tokbox.com/developer/guides/experience-composer) publishes to a video session (independent of an archiver or broadcast composer), Experience Composer publishes to a video session being archived, and Experience Composer publishes to a video session being sent to a live-streaming broadcast:
-
-```
-{
-  project(projectId: "${YOUR_API_KEY}") {
-    projectData(
-      start: ${moment(startDate)},
-      end: ${moment(endDate)},
-      interval: DAILY
-    ) {
-      resources {
-        intervalStart,
-        intervalEnd,
-        usage {
-          experienceComposer,
-          experienceComposerArchive,
-          experienceComposerBroadcast
-        }
-      }
-    }
-  }
-}
-```
-
 ## Development and Contributing
 
 Interested in contributing? We :heart: pull requests! See the
