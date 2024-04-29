@@ -17,7 +17,7 @@
     "express": "^4.17.1",
     "graphql": "^14.5.4",
     "graphql-tag": "^2.10.1",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "lodash": "^4.17.19",
     "minimist": ">=1.2.3",
     "moment": "^2.29.1",
