@@ -3,6 +3,7 @@ require('dotenv').config();
 const express = require('express');
 const fs = require('fs');
 const { createTokenTokBox, createTokenNexmo } = require('./helpers/token-generator');
+const axios = require('axios');
 
 const API_KEY = process.env.REACT_APP_API_KEY;
 const API_SECRET = process.env.API_SECRET;
@@ -42,7 +43,42 @@ const app = express();
  */
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', CLIENT_URL);
+  res.header('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-OPENTOK-AUTH');
+  if (req.method === 'OPTIONS') {
+    return res.sendStatus(200);
+  }
   next();
+});
+/**
+ * /graphql - Proxy GraphQL requests to the Insights API
+ */
+app.use(express.json());
+app.post('/graphql', async (req, res) => {
+  try {
+    const token = isTokBoxApiKey
+      ? createTokenTokBox(API_KEY, API_SECRET)
+      : createTokenNexmo(API_KEY, privateKey);
+    const headerKey = isTokBoxApiKey ? 'X-OPENTOK-AUTH' : 'Authorization';
+    const headerValue = isTokBoxApiKey ? token : `Bearer ${token}`;
+    const response = await axios.post(
+      process.env.REACT_APP_INSIGHTS_URL + '/graphql',
+      req.body,
+      {
+        headers: {
+          [headerKey]: headerValue,
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+    res.status(response.status).json(response.data);
+  } catch (error) {
+    if (error.response) {
+      res.status(error.response.status).json(error.response.data);
+    } else {
+      res.status(500).json({ error: error.toString() });
+    }
+  }
 });
 
 /**
