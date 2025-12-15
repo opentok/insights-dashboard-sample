@@ -10,7 +10,7 @@ const getCurrentTime = () => Math.floor(new Date() / 1000);
  * @param apiKey - TokBox API Key
  * @param apiSecret - TokBox API Secret
  */
-const createTokenTokBox = (apiKey, apiSecret) => {
+const createOpenTokToken = (apiKey, apiSecret) => {
   const currentTime = getCurrentTime();
   return jwt.sign({
     iss: apiKey,
@@ -21,11 +21,11 @@ const createTokenTokBox = (apiKey, apiSecret) => {
 };
 
 /**
- * Generates a new token for Nexmo users
- * @param applicationId - Nexmo Application ID
+ * Generates a new token for Vonage users
+ * @param applicationId - Vonage Application ID
  * @param privateKey - Buffer containing the private key
  */
-const createTokenNexmo = (applicationId, privateKey) => {
+const createVonageToken = (applicationId, privateKey) => {
   if (!(privateKey instanceof Buffer)) {
     throw new Error("You must set up your private key file.");
   }
@@ -39,6 +39,6 @@ const createTokenNexmo = (applicationId, privateKey) => {
 };
 
 module.exports = {
-  createTokenTokBox,
-  createTokenNexmo,
+  createOpenTokToken,
+  createVonageToken,
 };

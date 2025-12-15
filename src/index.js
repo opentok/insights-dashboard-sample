@@ -10,7 +10,6 @@ import { ApolloProvider } from 'react-apollo';
 import App from './App';
 
 const SERVER_URL = process.env.REACT_APP_SERVER_URL;
-const INSIGHTS_URL = process.env.REACT_APP_INSIGHTS_URL;
 const API_KEY = process.env.REACT_APP_API_KEY;
 
 const isTokBoxApiKey = /^-?\d+$/.test(API_KEY);
@@ -26,7 +25,7 @@ const authMiddleware = setContext(() =>
 
 const client = new ApolloClient({
   link: authMiddleware.concat(new HttpLink({
-    uri: urlJoin(INSIGHTS_URL, '/graphql') 
+    uri: urlJoin(SERVER_URL, '/graphql')
   })),
   cache: new InMemoryCache(),
 });
