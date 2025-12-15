@@ -2,7 +2,7 @@ require('dotenv').config();
 
 const express = require('express');
 const fs = require('fs');
-const { createTokenTokBox, createTokenNexmo } = require('./helpers/token-generator');
+const { createOpenTokToken, createVonageToken } = require('./helpers/token-generator');
 const axios = require('axios');
 
 const API_KEY = process.env.REACT_APP_API_KEY;
@@ -57,8 +57,8 @@ app.use(express.json());
 app.post('/graphql', async (req, res) => {
   try {
     const token = isTokBoxApiKey
-      ? createTokenTokBox(API_KEY, API_SECRET)
-      : createTokenNexmo(API_KEY, privateKey);
+      ? createOpenTokToken(API_KEY, API_SECRET)
+      : createVonageToken(API_KEY, privateKey);
     const headerKey = isTokBoxApiKey ? 'X-OPENTOK-AUTH' : 'Authorization';
     const headerValue = isTokBoxApiKey ? token : `Bearer ${token}`;
     const response = await axios.post(
@@ -87,8 +87,8 @@ app.post('/graphql', async (req, res) => {
  */
 app.get('/token', (req, res) => {
   const token = isTokBoxApiKey ?
-    createTokenTokBox(API_KEY, API_SECRET) :
-    createTokenNexmo(API_KEY, privateKey);
+    createOpenTokToken(API_KEY, API_SECRET) :
+    createVonageToken(API_KEY, privateKey);
   res.send(JSON.stringify({
     API_KEY,
     token,
